@@ -2828,36 +2828,29 @@ func (client *gocloak) GetPermissionTicket(ctx context.Context, token, realm str
 	return result, nil
 }
 
-// checkPermissionTicketParams checks that mandatory fields are present
-func checkPermissionTicketParams(permissions []CreatePermissionTicketParams) error {
-
-	if len(permissions) == 0 {
-		return errors.New("at least one permission ticket must be requested")
-	}
-
-	for _, pt := range permissions {
-
-		if NilOrEmpty(pt.ResourceID) {
-			return errors.New("resourceID required for permission ticket")
-		}
-		if NilOrEmptyArray(pt.ResourceScopes) {
-			return errors.New("at least one resourceScope required for permission ticket")
-		}
-	}
-
-	return nil
-
-}
-
 // CreatePermissionTicket creates a permission ticket, using access token from client
-func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm string, permissions []CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error) {
+// Documentation: // https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_permission_api_papi
+func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm string, permission CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error) {
 	const errMessage = "could not create permission ticket"
 
-	err := checkPermissionTicketParams(permissions)
+	var result PermissionTicketResponseRepresentation
+	resp, err := client.getRequestWithBearerAuth(ctx, token).
+		SetResult(&result).
+		SetBody(permission).
+		Post(client.getRealmURL(realm, "authz", "protection", "permission"))
 
-	if err != nil {
+	if err := checkForError(resp, err, errMessage); err != nil {
 		return nil, err
 	}
+
+	return &result, nil
+}
+
+// TODO: TEST
+// CreatePermissionTicket creates a permission ticket, using access token from client
+// Documentation: // https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_permission_api_papi
+func (client *gocloak) CreatePermissionTickets(ctx context.Context, token, realm string, permissions []CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error) {
+	const errMessage = "could not create permission ticket"
 
 	var result PermissionTicketResponseRepresentation
 	resp, err := client.getRequestWithBearerAuth(ctx, token).

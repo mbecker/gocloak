@@ -959,10 +959,35 @@ type PermissionRepresentation struct {
 }
 
 // CreatePermissionTicketParams represents the optional parameters for getting a permission ticket
+/*
+Documentation: https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_permission_api_papi
+See: https://github.com/keycloak/keycloak/blob/5cbe595fe3094aae8135b8f2c729e9af0cbdd076/core/src/main/java/org/keycloak/representations/idm/authorization/PermissionTicketRepresentation.java#L22
+private String id;
+    private String owner;
+    private String resource;
+    private String scope;
+    private boolean granted;
+    private String scopeName;
+    private String resourceName;
+    private String requester;
+    private String ownerName;
+	private String requesterName;
+
+	"resource": "{resource_id}",
+       "requester": "{user_id}",
+       "granted": true,
+       "scopeName": "view"
+*/
 type CreatePermissionTicketParams struct {
-	ResourceID     *string              `json:"resource_id,omitempty"`
-	ResourceScopes *[]string            `json:"resource_scopes,omitempty"`
-	Claims         *map[string][]string `json:"claims,omitempty"`
+	Owner         *string `json:"owner`
+	Resource      *string `json:"resource"`
+	Scope         *string `json:"scope"`
+	Granted       *bool   `json:"granted"`
+	ScopeName     *string `json:"scopeName"`
+	ResourceName  *string `json:"resourceName"`
+	Requester     *string `json:"requester"`
+	OwnerName     *string `json:"ownerName"`
+	RequesterName *string `json:"requesterName"`
 }
 
 // PermissionTicketDescriptionRepresentation represents the parameters returned along with a permission ticket
