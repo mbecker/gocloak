@@ -2812,6 +2812,22 @@ func (client *gocloak) GetPermissions(ctx context.Context, token, realm, clientI
 	return result, nil
 }
 
+// GetPermissionTicket returns a list of permission tickets for the realm authenticated by the (confidential) client (https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_api)
+func (client *gocloak) GetPermissionTicket(ctx context.Context, token, realm string) ([]*PermissionTicketRepresentationFull, error) {
+	const errMessage = "could not create permission ticket"
+
+	var result []*PermissionTicketRepresentationFull
+	resp, err := client.getRequestWithBearerAuth(ctx, token).
+		SetResult(&result).
+		Get(client.getRealmURL(realm, "authz", "protection", "permission", "ticket") + "?returnNames=true")
+
+	if err := checkForError(resp, err, errMessage); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 // checkPermissionTicketParams checks that mandatory fields are present
 func checkPermissionTicketParams(permissions []CreatePermissionTicketParams) error {
 

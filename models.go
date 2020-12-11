@@ -996,6 +996,20 @@ type PermissionTicketResponseRepresentation struct {
 	Ticket *string `json:"ticket,omitempty"`
 }
 
+// PermissionTicketRepresentationFull represents a Keycloak Permission Ticket
+type PermissionTicketRepresentationFull struct {
+	ID            *string `json:"id,omitempty"`
+	Owner         *string `json:"owner,omitempty"`
+	Resource      *string `json:"resource,omitempty"`
+	Scope         *string `json:"scope,omitempty"`
+	Granted       *bool   `json:"granted,omitempty"`
+	ScopeName     *string `json:"scopeName,omitempty"`
+	ResourceName  *string `json:"resourceName,omitempty"`
+	Requester     *string `json:"requester,omitempty"`
+	OwnerName     *string `json:"ownerName,omitempty"`
+	RequesterName *string `json:"requesterName,omitempty"`
+}
+
 // PermissionTicketRepresentation represents the permission ticket contents
 type PermissionTicketRepresentation struct {
 	AZP         *string                                     `json:"azp,omitempty"`
