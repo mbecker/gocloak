@@ -2837,7 +2837,7 @@ func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm 
 	resp, err := client.getRequestWithBearerAuth(ctx, token).
 		SetResult(&result).
 		SetBody(permission).
-		Post(client.getRealmURL(realm, "authz", "protection", "permission"))
+		Post(client.getRealmURL(realm, "authz", "protection", "permission", "ticket"))
 
 	if err := checkForError(resp, err, errMessage); err != nil {
 		return nil, err
@@ -2856,7 +2856,7 @@ func (client *gocloak) CreatePermissionTickets(ctx context.Context, token, realm
 	resp, err := client.getRequestWithBearerAuth(ctx, token).
 		SetResult(&result).
 		SetBody(permissions).
-		Post(client.getRealmURL(realm, "authz", "protection", "permission"))
+		Post(client.getRealmURL(realm, "authz", "protection", "permission", "ticket"))
 
 	if err := checkForError(resp, err, errMessage); err != nil {
 		return nil, err
