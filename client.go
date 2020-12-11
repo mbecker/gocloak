@@ -2830,32 +2830,13 @@ func (client *gocloak) GetPermissionTicket(ctx context.Context, token, realm str
 
 // CreatePermissionTicket creates a permission ticket, using access token from client
 // Documentation: // https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_permission_api_papi
-func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm string, permission CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error) {
+func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm string, permission CreatePermissionTicketParams) (*PermissionTicketRepresentationFull, error) {
 	const errMessage = "could not create permission ticket"
 
-	var result PermissionTicketResponseRepresentation
+	var result PermissionTicketRepresentationFull
 	resp, err := client.getRequestWithBearerAuth(ctx, token).
 		SetResult(&result).
 		SetBody(permission).
-		Post(client.getRealmURL(realm, "authz", "protection", "permission", "ticket"))
-
-	if err := checkForError(resp, err, errMessage); err != nil {
-		return nil, err
-	}
-
-	return &result, nil
-}
-
-// TODO: TEST
-// CreatePermissionTicket creates a permission ticket, using access token from client
-// Documentation: // https://www.keycloak.org/docs/latest/authorization_services/#_service_protection_permission_api_papi
-func (client *gocloak) CreatePermissionTickets(ctx context.Context, token, realm string, permissions []CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error) {
-	const errMessage = "could not create permission ticket"
-
-	var result PermissionTicketResponseRepresentation
-	resp, err := client.getRequestWithBearerAuth(ctx, token).
-		SetResult(&result).
-		SetBody(permissions).
 		Post(client.getRealmURL(realm, "authz", "protection", "permission", "ticket"))
 
 	if err := checkForError(resp, err, errMessage); err != nil {
