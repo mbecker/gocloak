@@ -354,7 +354,9 @@ type GoCloak interface {
 	// GetPermissionTicket returns a list of permissions of the realm authenticated by the (confidential) client
 	GetPermissionTicket(ctx context.Context, token, realm string) ([]*PermissionTicketRepresentationFull, error)
 	// CreatePermissionTicket creates a permission ticket for a resource, using access token from client (typically a resource server)
-	CreatePermissionTicket(ctx context.Context, token, realm string, permissions []CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error)
+	CreatePermissionTicket(ctx context.Context, token, realm string, permission CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error)
+	// CreatePermissionTickets TEST create multiple permissions
+	CreatePermissionTickets(ctx context.Context, token, realm string, permissions []CreatePermissionTicketParams) (*PermissionTicketResponseRepresentation, error)
 	// GrantUserPermission lets resource owner grant permission for specific resource ID to specific user ID
 	GrantUserPermission(ctx context.Context, token, realm string, permission PermissionGrantParams) (*PermissionGrantResponseRepresentation, error)
 	// GrantPermission lets resource owner update permission for specific resource ID to specific user ID
