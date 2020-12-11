@@ -979,15 +979,15 @@ private String id;
        "scopeName": "view"
 */
 type CreatePermissionTicketParams struct {
-	Owner         *string `json:"owner`
-	Resource      *string `json:"resource"`
-	Scope         *string `json:"scope"`
-	Granted       *bool   `json:"granted"`
-	ScopeName     *string `json:"scopeName"`
-	ResourceName  *string `json:"resourceName"`
-	Requester     *string `json:"requester"`
-	OwnerName     *string `json:"ownerName"`
-	RequesterName *string `json:"requesterName"`
+	Owner         *string `json:"owner,omitempty"`
+	Resource      *string `json:"resource,omitempty"`
+	Scope         *string `json:"scope,omitempty"`
+	Granted       *bool   `json:"granted,omitempty"`
+	ScopeName     *string `json:"scopeName,omitempty"`
+	ResourceName  *string `json:"resourceName,omitempty"`
+	Requester     *string `json:"requester,omitempty"`
+	OwnerName     *string `json:"ownerName,omitempty"`
+	RequesterName *string `json:"requesterName,omitempty"`
 }
 
 // PermissionTicketDescriptionRepresentation represents the parameters returned along with a permission ticket
