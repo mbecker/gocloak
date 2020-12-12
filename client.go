@@ -2846,6 +2846,8 @@ func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm 
 	return &result, nil
 }
 
+// DirectNakedImpersonation request an access token that the client can impersonate any user in the realm
+// https://www.keycloak.org/docs/latest/securing_apps/index.html#direct-naked-impersonation
 func (client *gocloak) DirectNakedImpersonation(ctx context.Context, clientID string, clientSecret string, realm string, subject string) (*JWT, error) {
 	const errMessage = "could not get exchange token"
 	var result JWT
