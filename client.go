@@ -2846,6 +2846,26 @@ func (client *gocloak) CreatePermissionTicket(ctx context.Context, token, realm 
 	return &result, nil
 }
 
+func (client *gocloak) DirectNakedImpersonation(ctx context.Context, clientID string, clientSecret string, realm string, subject string) (*JWT, error) {
+	const errMessage = "could not get exchange token"
+	var result JWT
+	resp, err := client.getRequest(ctx).
+		SetFormData(map[string]string{
+			"client_id":         clientID,
+			"client_secret":     clientSecret,
+			"grant_type":        "urn:ietf:params:oauth:grant-type:token-exchange",
+			"requested_subject": subject,
+		}).
+		Post(client.Config.tokenEndpoint)
+
+	if err := checkForError(resp, err, errMessage); err != nil {
+		return nil, err
+	}
+
+	return &result, err
+
+}
+
 // checkPermissionGrantParams checks for mandatory fields
 func checkPermissionGrantParams(permission PermissionGrantParams) error {
 

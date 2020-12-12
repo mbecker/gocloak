@@ -351,6 +351,8 @@ type GoCloak interface {
 	// DeleteScope deletes a scope associated with the client, using access token from admin
 	DeleteScope(ctx context.Context, token, realm, clientID, scopeID string) error
 
+	// DirectNakedImpersonation request an access token that the client can impersonate any user in the realm
+	DirectNakedImpersonation(ctx context.Context, clientID string, clientSecret string, realm string, subject string) (*JWT, error)
 	// GetPermissionTicket returns a list of permissions of the realm authenticated by the (confidential) client
 	GetPermissionTicket(ctx context.Context, token, realm string) ([]*PermissionTicketRepresentationFull, error)
 	// CreatePermissionTicket creates a permission ticket for a resource, using access token from client (typically a resource server)
