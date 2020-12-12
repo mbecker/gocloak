@@ -2852,6 +2852,7 @@ func (client *gocloak) DirectNakedImpersonation(ctx context.Context, clientID st
 	const errMessage = "could not get exchange token"
 	var result JWT
 	resp, err := client.getRequest(ctx).
+		SetResult(&result).
 		SetFormData(map[string]string{
 			"client_id":         clientID,
 			"client_secret":     clientSecret,
