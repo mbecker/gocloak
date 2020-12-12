@@ -2858,7 +2858,7 @@ func (client *gocloak) DirectNakedImpersonation(ctx context.Context, clientID st
 			"grant_type":        "urn:ietf:params:oauth:grant-type:token-exchange",
 			"requested_subject": subject,
 		}).
-		Post(client.Config.tokenEndpoint)
+		Post(client.getRealmURL(realm, client.Config.tokenEndpoint))
 
 	if err := checkForError(resp, err, errMessage); err != nil {
 		return nil, err
